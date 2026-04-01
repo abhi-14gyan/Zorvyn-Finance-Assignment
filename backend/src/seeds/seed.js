@@ -80,14 +80,10 @@ async function seed() {
     await Budget.deleteMany({});
     console.log("🗑️  Cleared existing data");
 
-    // Create users
+    // Create users (Mongoose pre-save hook handles password hashing)
     const createdUsers = [];
     for (const userData of SEED_USERS) {
-      const hashedPassword = await bcrypt.hash(userData.password, 10);
-      const user = await User.create({
-        ...userData,
-        password: hashedPassword,
-      });
+      const user = await User.create(userData);
       createdUsers.push(user);
       console.log(`👤 Created user: ${user.email} (role: ${user.role})`);
     }
