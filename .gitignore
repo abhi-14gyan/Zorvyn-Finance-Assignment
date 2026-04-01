@@ -1,19 +1,22 @@
 # Dependencies
 node_modules/
 
-# Environment files (secrets)
+# Environment files (NEVER commit secrets)
 .env
 .env.local
 .env.production
 .env.test
-
-# Build outputs
-build/
-dist/
+!.env.example
 
 # Logs
+logs/
 *.log
 npm-debug.log*
+
+# Build output
+build/
+dist/
+.next/
 
 # OS files
 .DS_Store
@@ -26,3 +29,7 @@ Thumbs.db
 # Temp files
 backend/public/temp/*
 !backend/public/temp/.gitkeep
+
+# Coverage
+coverage/
+*.lcov
