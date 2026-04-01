@@ -1,0 +1,21 @@
+.tilted-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 4rem 0; /* adjust spacing as needed */
+  perspective: 1000px; /* Enables 3D effect */
+}
+
+.tilted-image {
+  width: 1200px;
+  height:500px;
+  /* max-width: 1000px; */
+  transform: rotateX(15deg); /* Initial tilt */
+  transition: transform 0.5s ease-in-out;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  border-radius: 16px;
+}
+
+.tilted-image:hover {
+  transform: rotateY(0deg); /* Back to front */
+}

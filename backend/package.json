@@ -1,0 +1,50 @@
+{
+  "name": "zorvyn-finance-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write .",
+    "dev": "nodemon src/index.js",
+    "start": "node src/index.js",
+    "seed": "node src/seeds/seed.js",
+    "seed:guest": "node src/actions/seedGuest.js",
+    "email": "email dev"
+  },
+  "author": "Abhigyan Srivastava",
+  "license": "ISC",
+  "description": "Finance Data Processing and Access Control Backend — Role-based financial dashboard with CRUD, aggregation, and RBAC",
+  "dependencies": {
+    "@arcjet/inspect": "^1.0.0-beta.8",
+    "@arcjet/node": "^1.0.0-beta.8",
+    "@google/generative-ai": "^0.24.1",
+    "@react-email/components": "^0.1.0",
+    "@react-email/render": "^1.1.2",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.6.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "date-fns": "^4.1.0",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "firebase": "^11.8.1",
+    "helmet": "^8.1.0",
+    "inngest": "^3.39.1",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.15.1",
+    "multer": "^2.0.0",
+    "nodemailer": "^7.0.3",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "resend": "^4.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "prettier": "^3.5.3",
+    "react-email": "4.0.16"
+  }
+}
