@@ -3,7 +3,7 @@ import { useSearchParams, useNavigate } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import Navbar from '../components/InitialNavbar';
 import axios from '../utils/axios';
-import logo from '../assets/Finlocklogo.png';
+
 
 export default function VerifyEmail() {
   const [searchParams] = useSearchParams();
@@ -74,7 +74,7 @@ export default function VerifyEmail() {
 
             {/* Logo */}
             <div className="w-14 h-14 bg-gradient-to-br from-[#10B981] to-[#4EDEA3] rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-md">
-              <img src={logo} alt="Finlock" className="h-8 w-8" />
+              <span className="text-2xl font-black text-[#003824]">Z</span>
             </div>
 
             {/* Verifying State */}

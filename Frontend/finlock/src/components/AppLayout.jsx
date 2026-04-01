@@ -8,7 +8,12 @@ import {
   LayoutGrid, LogOut, Sun, Moon, Menu, X,
   User, ArrowLeftRight, Shield,
 } from 'lucide-react';
-import logo from '../assets/Finlocklogo.png';
+// Zorvyn text logo — no external image dependency
+const ZorvynLogo = ({ size = 'h-9 w-9' }) => (
+  <div className={`${size} rounded-xl bg-gradient-to-br from-[#10B981] to-[#4EDEA3] flex items-center justify-center font-black text-[#003824] text-lg shadow-lg shadow-emerald-500/20`}>
+    Z
+  </div>
+);
 import UsernameCard from './UsernameCard';
 
 const ROLE_BADGE = {
@@ -64,7 +69,7 @@ export default function AppLayout({ children }) {
           className="flex items-center justify-center h-[72px] cursor-pointer hover:opacity-80 transition-opacity"
           onClick={() => navigate("/")}
         >
-          <img src={logo} alt="Zorvyn" className="h-9 w-9" />
+          <ZorvynLogo />
         </div>
 
         {/* Nav Items */}
@@ -142,7 +147,7 @@ export default function AppLayout({ children }) {
       <div className={`lg:hidden fixed top-0 left-0 right-0 z-30 ${t.sidebar} border-b ${t.border} backdrop-blur-xl`}>
         <div className="flex items-center justify-between px-4 h-14">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-            <img src={logo} alt="Zorvyn" className="h-7 w-7" />
+            <ZorvynLogo size="h-7 w-7" />
             <span className={`text-lg font-semibold ${t.text.primary}`}>Zorvyn</span>
             {/* Mobile role badge */}
             <span className={`px-1.5 py-0.5 rounded-full text-[8px] font-semibold uppercase tracking-wider border ${roleBadge.color}`}>

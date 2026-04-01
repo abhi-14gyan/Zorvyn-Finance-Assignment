@@ -406,7 +406,7 @@ const AccountPage = () => {
 
       {/* Footer */}
       <div className="text-center py-8">
-        <p className={`${t.text.muted} text-xs`}>Powered by Finlock</p>
+        <p className={`${t.text.muted} text-xs`}>Powered by Zorvyn</p>
       </div>
     </AppLayout>
   );

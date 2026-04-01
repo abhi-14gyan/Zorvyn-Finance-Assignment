@@ -5,7 +5,7 @@ import axios from "../utils/axios";
 import { toast } from 'react-toastify';
 import { useTheme } from '../context/ThemeContext';
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/Finlocklogo.png';
+
 
 export default function SignInPage() {
   const [email, setEmail] = useState('');
@@ -83,7 +83,7 @@ export default function SignInPage() {
 
   const handleGoogleLogin = () => {
     if (user) toast.success("Already Signed in");
-    window.location.href = "https://finlock-backend-oo7z.onrender.com/api/v1/auth/google";
+    window.location.href = `${process.env.REACT_APP_BACKEND_URL || ''}/api/v1/auth/google`;
   };
 
   return (
@@ -96,7 +96,7 @@ export default function SignInPage() {
               {/* Header */}
               <div className="text-center mb-8">
                 <div className="w-14 h-14 bg-gradient-to-br from-[#10B981] to-[#4EDEA3] rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-md">
-                  <img src={logo} alt="Finlock" className="h-8 w-8" />
+                  <span className="text-2xl font-black text-[#003824]">Z</span>
                 </div>
                 <h1 className={`${t.text.primary} text-2xl font-bold mb-2 tracking-tight`}>Sign In</h1>
                 <p className={`${t.text.secondary} text-sm`}>Welcome back! Please login to your account.</p>

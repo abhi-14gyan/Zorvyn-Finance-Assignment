@@ -1,5 +1,5 @@
 /**
- * Finlock Obsidian Design System
+ * Zorvyn Obsidian Design System
  * Centralized design tokens — generated via Stitch MCP
  * 
  * Philosophy: "The Precision Architect"

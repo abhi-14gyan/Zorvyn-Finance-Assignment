@@ -194,7 +194,7 @@ export default function LandingPage() {
             Ready to take control?
           </h2>
           <p className={`${t.text.secondary} mb-8 max-w-xl mx-auto`}>
-            Join thousands who are building better financial habits with Finlock.
+            Join thousands who are building better financial habits with Zorvyn.
           </p>
           <button
             onClick={() => navigate(user ? "/dashboard" : "/register")}
@@ -210,7 +210,7 @@ export default function LandingPage() {
       <footer className={`border-t ${t.border} py-8`}>
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
-            <span className={`text-sm font-semibold ${t.text.primary}`}>Finlock</span>
+            <span className={`text-sm font-semibold ${t.text.primary}`}>Zorvyn</span>
             <span className={`text-xs ${t.text.muted}`}>© 2025</span>
           </div>
           <div className="flex gap-6">
