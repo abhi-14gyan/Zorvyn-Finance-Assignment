@@ -1,6 +1,7 @@
 # Zorvyn Finance — API Documentation
 
-> Base URL: `http://localhost:4000/api/v1`
+> **Live Base URL:** `https://zorvyn-finance-assignment.onrender.com/api/v1`  
+> **Local Base URL:** `http://localhost:4000/api/v1`
 
 All authenticated endpoints require a JWT access token, sent automatically as an httpOnly cookie or via `Authorization: Bearer <token>` header.
 
