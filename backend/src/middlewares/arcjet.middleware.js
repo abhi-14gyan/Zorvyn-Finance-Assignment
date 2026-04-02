@@ -7,7 +7,7 @@ const arcjet = arcjetImport.default;
 
 const aj = arcjet({
   key: process.env.ARCJET_API_KEY,
-  characteristics: ["ip.src"],
+  characteristics: ["userId"],
   rules: [
     shield({ mode: "LIVE" }),
     detectBot({

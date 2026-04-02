@@ -31,7 +31,7 @@ POST /users/login
 **Body:**
 ```json
 {
-  "email": "admin@zorvyn.com",
+  "email": "a",
   "password": "admin123"
 }
 ```
