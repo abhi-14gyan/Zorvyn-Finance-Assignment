@@ -83,7 +83,7 @@ exports.createTransaction = asyncHandler(async (req, res) => {
 
 // Get a transaction
 exports.getTransaction = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
+  const role = req.user.role;
   const { id } = req.params;
 
   // Validate ObjectId format
@@ -91,7 +91,12 @@ exports.getTransaction = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid transaction ID format");
   }
 
-  const txn = await Transaction.findOne({ _id: id, userId });
+  // Admin & Analyst can view any transaction; Viewer can only view their own
+  const filter = (role === "admin" || role === "analyst")
+    ? { _id: id }
+    : { _id: id, userId: req.user._id };
+
+  const txn = await Transaction.findOne(filter);
   if (!txn) throw new ApiError(404, "Transaction not found");
 
   res.status(200).json({ success: true, data: serializeAmount(txn) });
@@ -196,13 +201,15 @@ exports.deleteTransaction = asyncHandler(async (req, res) => {
 });
 
 // Get all transactions (SECURED — allowlisted query params only)
+// Admin & Analyst see ALL transactions; Viewer sees only their own
 exports.getUserTransactions = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
+  const role = req.user.role;
 
   // ── Allowlisted filters (prevents NoSQL injection) ──
   const { accountId, type, category, startDate, endDate, page, limit: limitParam, search } = req.query;
 
-  const filter = { userId };
+  // Admin & Analyst see all; Viewer sees only their own
+  const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
 
   if (accountId && mongoose.Types.ObjectId.isValid(accountId)) {
     filter.accountId = accountId;

@@ -16,13 +16,17 @@ const serializeDecimal = (obj) => {
 };
 
 // GET account with transactions
+// Admin & Analyst can view any account; Viewer can only view their own
 exports.getAccountWithTransactions = async (req, res, next) => {
   try {
-    const userId = req.user._id;
-    const account = await Account.findOne({
-      _id: req.params.accountId,
-      userId,
-    }).lean();
+    const role = req.user.role;
+
+    // Admin & Analyst can view any account; Viewer restricted to own accounts
+    const findFilter = (role === "admin" || role === "analyst")
+      ? { _id: req.params.accountId }
+      : { _id: req.params.accountId, userId: req.user._id };
+
+    const account = await Account.findOne(findFilter).lean();
 
     if (!account) {
       return res.status(404).json({ message: 'Account not found' });

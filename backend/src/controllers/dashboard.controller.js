@@ -33,10 +33,12 @@ const serializeTransaction = (obj) => {
 };
 
 // GET /api/v1/dashboard/accounts
+// Admin & Analyst see ALL accounts; Viewer sees only their own
 exports.getUserAccounts = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
+  const role = req.user.role;
+  const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
 
-  const accounts = await Account.find({ userId })
+  const accounts = await Account.find(filter)
     .sort({ createdAt: -1 })
     .lean();
 
@@ -80,10 +82,12 @@ exports.createAccount = asyncHandler(async (req, res) => {
 });
 
 // GET /api/v1/dashboard/transactions
+// Admin & Analyst see ALL transactions; Viewer sees only their own
 exports.getDashboardData = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
+  const role = req.user.role;
+  const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
 
-  const transactions = await Transaction.find({ userId }).sort({ date: -1 });
+  const transactions = await Transaction.find(filter).sort({ date: -1 });
 
   const serialized = transactions.map(serializeTransaction);
 
@@ -106,11 +110,13 @@ exports.getDashboardData = asyncHandler(async (req, res) => {
  * - monthlyTrends (last 6 months)
  */
 exports.getDashboardSummary = asyncHandler(async (req, res) => {
+  const role = req.user.role;
   const userId = new mongoose.Types.ObjectId(req.user._id);
+  const matchFilter = (role === "admin" || role === "analyst") ? {} : { userId };
 
   // ── 1. Totals: total income, total expenses, net balance ──
   const totalsResult = await Transaction.aggregate([
-    { $match: { userId } },
+    { $match: matchFilter },
     {
       $group: {
         _id: "$type",
@@ -129,7 +135,7 @@ exports.getDashboardSummary = asyncHandler(async (req, res) => {
 
   // ── 2. Category-wise breakdown ──
   const categoryBreakdown = await Transaction.aggregate([
-    { $match: { userId } },
+    { $match: matchFilter },
     {
       $group: {
         _id: { category: "$category", type: "$type" },
@@ -150,7 +156,7 @@ exports.getDashboardSummary = asyncHandler(async (req, res) => {
   ]);
 
   // ── 3. Recent transactions (last 5) ──
-  const recentTransactions = await Transaction.find({ userId })
+  const recentTransactions = await Transaction.find(matchFilter)
     .sort({ date: -1 })
     .limit(5)
     .lean();
@@ -169,7 +175,7 @@ exports.getDashboardSummary = asyncHandler(async (req, res) => {
   const monthlyTrends = await Transaction.aggregate([
     {
       $match: {
-        userId,
+        ...matchFilter,
         date: { $gte: sixMonthsAgo },
       },
     },
@@ -202,7 +208,7 @@ exports.getDashboardSummary = asyncHandler(async (req, res) => {
   const trends = Object.values(trendsMap).sort((a, b) => a.month.localeCompare(b.month));
 
   // ── 5. Account balances ──
-  const accounts = await Account.find({ userId }).lean();
+  const accounts = await Account.find(matchFilter).lean();
   const totalBalance = accounts.reduce(
     (sum, acc) => sum + parseFloat(acc.balance?.toString() || 0),
     0
@@ -226,13 +232,15 @@ exports.getDashboardSummary = asyncHandler(async (req, res) => {
 
 // DELETE /api/v1/dashboard/accounts/:accountId
 exports.deleteAccount = asyncHandler(async (req, res) => {
-  const userId = req.user._id;
+  const role = req.user.role;
   const accountId = req.params.accountId;
 
-  const account = await Account.findOne({
-    _id: accountId,
-    userId,
-  });
+  // Admin can delete any account; non-admin can only delete their own
+  const findFilter = role === "admin"
+    ? { _id: accountId }
+    : { _id: accountId, userId: req.user._id };
+
+  const account = await Account.findOne(findFilter);
 
   if (!account) {
     throw new ApiError(404, "Account not found or unauthorized");
