@@ -39,6 +39,7 @@ exports.getUserAccounts = asyncHandler(async (req, res) => {
   const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
 
   const accounts = await Account.find(filter)
+    .populate("userId", "username email")
     .sort({ createdAt: -1 })
     .lean();
 

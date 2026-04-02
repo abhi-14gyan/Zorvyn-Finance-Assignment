@@ -229,7 +229,7 @@ const Dashboard = () => {
             >
               {accounts.map((account) => (
                 <option key={account._id} value={account._id}>
-                  {account.name}
+                  {account.userId?.username ? `${account.userId.username} — ${account.name}` : account.name}
                 </option>
               ))}
             </select>
@@ -325,7 +325,7 @@ const Dashboard = () => {
 
       {/* ── Account Cards ── */}
       <div className="mb-4">
-        <h2 className={`text-base font-semibold ${t.text.primary} mb-4`}>Your Accounts</h2>
+        <h2 className={`text-base font-semibold ${t.text.primary} mb-4`}>Accounts</h2>
       </div>
 
       <CreateAccountDrawer open={openDrawer} setOpen={setOpenDrawer} onClose={handleDrawerClose} />
@@ -359,6 +359,11 @@ const Dashboard = () => {
             >
               <div className="flex justify-between items-start mb-4">
                 <div>
+                  {account.userId?.username && (
+                    <p className={`text-[11px] font-medium uppercase tracking-wider ${t.text.muted} mb-0.5`}>
+                      {account.userId.username}
+                    </p>
+                  )}
                   <h3 className={`font-semibold ${t.text.primary} text-[15px]`}>
                     {capitalizeFirst(account.name)}
                   </h3>
