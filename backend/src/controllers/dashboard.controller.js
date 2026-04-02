@@ -33,12 +33,10 @@ const serializeTransaction = (obj) => {
 };
 
 // GET /api/v1/dashboard/accounts
-// Admin & Analyst see ALL accounts; Viewer sees only their own
+// All roles see all accounts (dashboard is a system-wide view)
+// Write access is controlled at the route level via authorize()
 exports.getUserAccounts = asyncHandler(async (req, res) => {
-  const role = req.user.role;
-  const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
-
-  const accounts = await Account.find(filter)
+  const accounts = await Account.find({})
     .populate("userId", "username email")
     .sort({ createdAt: -1 })
     .lean();
@@ -83,12 +81,9 @@ exports.createAccount = asyncHandler(async (req, res) => {
 });
 
 // GET /api/v1/dashboard/transactions
-// Admin & Analyst see ALL transactions; Viewer sees only their own
+// All roles see all transactions on the dashboard feed
 exports.getDashboardData = asyncHandler(async (req, res) => {
-  const role = req.user.role;
-  const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
-
-  const transactions = await Transaction.find(filter).sort({ date: -1 });
+  const transactions = await Transaction.find({}).sort({ date: -1 });
 
   const serialized = transactions.map(serializeTransaction);
 
@@ -111,9 +106,8 @@ exports.getDashboardData = asyncHandler(async (req, res) => {
  * - monthlyTrends (last 6 months)
  */
 exports.getDashboardSummary = asyncHandler(async (req, res) => {
-  const role = req.user.role;
-  const userId = new mongoose.Types.ObjectId(req.user._id);
-  const matchFilter = (role === "admin" || role === "analyst") ? {} : { userId };
+  // All roles see system-wide summary (this is aggregate, read-only data)
+  const matchFilter = {};
 
   // ── 1. Totals: total income, total expenses, net balance ──
   const totalsResult = await Transaction.aggregate([
