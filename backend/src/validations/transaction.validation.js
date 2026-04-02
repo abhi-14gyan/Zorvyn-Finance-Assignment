@@ -41,12 +41,12 @@ const createTransactionSchema = Joi.object({
   isRecurring: Joi.boolean().default(false),
   recurringInterval: Joi.when("isRecurring", {
     is: true,
-    then: Joi.string().valid("DAILY", "WEEKLY", "MONTHLY").required()
+    then: Joi.string().valid("DAILY", "WEEKLY", "MONTHLY", "YEARLY").required()
       .messages({
-        "any.only": "Recurring interval must be DAILY, WEEKLY, or MONTHLY",
+        "any.only": "Recurring interval must be DAILY, WEEKLY, MONTHLY, or YEARLY",
         "any.required": "Recurring interval is required when isRecurring is true",
       }),
-    otherwise: Joi.string().valid("DAILY", "WEEKLY", "MONTHLY").allow(null, ""),
+    otherwise: Joi.string().valid("DAILY", "WEEKLY", "MONTHLY", "YEARLY").allow(null, ""),
   }),
   receiptUrl: Joi.string().uri().allow("", null),
   status: Joi.string().valid("PENDING", "COMPLETED", "FAILED").default("COMPLETED"),
@@ -60,7 +60,7 @@ const updateTransactionSchema = Joi.object({
   category: Joi.string().trim(),
   accountId: Joi.string().hex().length(24),
   isRecurring: Joi.boolean(),
-  recurringInterval: Joi.string().valid("DAILY", "WEEKLY", "MONTHLY").allow(null, ""),
+  recurringInterval: Joi.string().valid("DAILY", "WEEKLY", "MONTHLY", "YEARLY").allow(null, ""),
   receiptUrl: Joi.string().uri().allow("", null),
   status: Joi.string().valid("PENDING", "COMPLETED", "FAILED"),
 }).min(1).messages({

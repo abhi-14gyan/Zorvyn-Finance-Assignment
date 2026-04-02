@@ -32,7 +32,7 @@ const {
 } = require("../validations/user.validation");
 
 // ── Public Routes ──
-router.post("/register", validate(registerSchema), registerUser);
+router.post("/register", upload.single('imageUrl'), validate(registerSchema), registerUser);
 router.post("/login", validate(loginSchema), loginUser);
 router.post("/refresh-token", refreshAccessToken);
 router.get("/verify-email", verifyEmail);

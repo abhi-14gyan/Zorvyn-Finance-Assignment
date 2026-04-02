@@ -58,11 +58,19 @@ const registerUser = asyncHandler(async (req, res) => {
   const existedEmail = await User.findOne({ email });
   if (existedEmail) throw new ApiError(409, "Email already exists");
 
+  let imageUrl = null;
+  if (req.file && req.file.path) {
+    const uploadedSource = await uploadOnCloudinary(req.file.path);
+    if (uploadedSource?.url) {
+      imageUrl = uploadedSource.url;
+    }
+  }
+
   const user = await User.create({
     email,
     password,
     username,
-    imageUrl: null,
+    imageUrl: imageUrl,
     isVerified: false,
     role: "viewer",       // Default role for new registrations
     status: "active",
