@@ -1,13 +1,14 @@
 import React from "react";
+import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
+import { Sun, Moon } from "lucide-react";
+
 // Zorvyn text logo
 const ZorvynLogo = () => (
   <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#10B981] to-[#4EDEA3] flex items-center justify-center font-black text-[#003824] text-lg shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
     Z
   </div>
 );
-import { useTheme } from "../context/ThemeContext";
-import { useNavigate } from "react-router-dom";
-import { Sun, Moon } from "lucide-react";
 
 export default function Navbar() {
   const { isDark, toggleTheme, t } = useTheme();

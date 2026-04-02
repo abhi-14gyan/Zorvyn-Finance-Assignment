@@ -8,13 +8,13 @@ import {
   LayoutGrid, LogOut, Sun, Moon, Menu, X,
   User, ArrowLeftRight, Shield,
 } from 'lucide-react';
+import UsernameCard from './UsernameCard';
 // Zorvyn text logo — no external image dependency
 const ZorvynLogo = ({ size = 'h-9 w-9' }) => (
   <div className={`${size} rounded-xl bg-gradient-to-br from-[#10B981] to-[#4EDEA3] flex items-center justify-center font-black text-[#003824] text-lg shadow-lg shadow-emerald-500/20`}>
     Z
   </div>
 );
-import UsernameCard from './UsernameCard';
 
 const ROLE_BADGE = {
   admin: { label: 'Admin', color: 'bg-purple-500/20 text-purple-400 border-purple-500/30' },

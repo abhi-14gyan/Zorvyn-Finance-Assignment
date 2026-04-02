@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import { useTheme } from "../context/ThemeContext";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, Sun, Moon } from "lucide-react";
+
 const ZorvynLogo = () => (
   <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-[#10B981] to-[#4EDEA3] flex items-center justify-center font-black text-[#003824] text-lg shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
     Z
   </div>
 );
-import { useAuth } from "../context/AuthContext";
-import { useTheme } from "../context/ThemeContext";
-import { useNavigate } from "react-router-dom";
-import { Menu, X, Sun, Moon } from "lucide-react";
 
 export default function LandingNav() {
   const { user } = useAuth();
