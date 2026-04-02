@@ -24,8 +24,8 @@ export function CreateAccountDrawer({ open, setOpen, onClose, children }) {
 
   const handleClick = async () => {
     const formData = {
-      name: watch("name"), type: watch("type"),
-      balance: watch("balance"), isDefault: watch("isDefault"),
+      name: watch("name"), type: watch("type").toLowerCase(),
+      balance: parseFloat(watch("balance")), isDefault: watch("isDefault"),
     };
     try {
       setLoading(true);
