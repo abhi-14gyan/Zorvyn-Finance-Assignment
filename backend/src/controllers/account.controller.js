@@ -16,12 +16,12 @@ const serializeDecimal = (obj) => {
 };
 
 // GET account with transactions
-// Admin & Analyst can view any account; Viewer can only view their own
+// Only Analyst & Admin can access this endpoint (Viewer is blocked at route level)
 exports.getAccountWithTransactions = async (req, res, next) => {
   try {
     const role = req.user.role;
 
-    // Admin & Analyst can view any account; Viewer restricted to own accounts
+    // Both Analyst & Admin see any account (Viewer never reaches here — blocked by route middleware)
     const findFilter = (role === "admin" || role === "analyst")
       ? { _id: req.params.accountId }
       : { _id: req.params.accountId, userId: req.user._id };

@@ -32,7 +32,7 @@ POST /users/login
 **Body:**
 ```json
 {
-  "email": "a",
+  "email": "admin@zorvyn.com",
   "password": "admin123"
 }
 ```
@@ -406,7 +406,7 @@ GET /dashboard/summary
 GET /dashboard/transactions
 ```
 **Auth:** All roles  
-**Response:** `200 OK` — returns all transactions for the logged-in user, sorted by date.
+**Response:** `200 OK` — returns all transactions system-wide (across all users), sorted by date. This is the organisational dashboard feed.
 
 ---
 

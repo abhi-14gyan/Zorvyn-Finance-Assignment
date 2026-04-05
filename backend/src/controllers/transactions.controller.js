@@ -91,7 +91,7 @@ exports.getTransaction = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid transaction ID format");
   }
 
-  // Admin & Analyst can view any transaction; Viewer can only view their own
+  // Only Analyst & Admin reach here (Viewer is blocked at route level by authorize middleware)
   const filter = (role === "admin" || role === "analyst")
     ? { _id: id }
     : { _id: id, userId: req.user._id };
@@ -201,14 +201,14 @@ exports.deleteTransaction = asyncHandler(async (req, res) => {
 });
 
 // Get all transactions (SECURED — allowlisted query params only)
-// Admin & Analyst see ALL transactions; Viewer sees only their own
+// Only Analyst & Admin can access (Viewer is blocked at route level)
 exports.getUserTransactions = asyncHandler(async (req, res) => {
   const role = req.user.role;
 
   // ── Allowlisted filters (prevents NoSQL injection) ──
   const { accountId, type, category, startDate, endDate, page, limit: limitParam, search } = req.query;
 
-  // Admin & Analyst see all; Viewer sees only their own
+  // Both Analyst & Admin see all transactions (Viewer never reaches here)
   const filter = (role === "admin" || role === "analyst") ? {} : { userId: req.user._id };
 
   if (accountId && mongoose.Types.ObjectId.isValid(accountId)) {

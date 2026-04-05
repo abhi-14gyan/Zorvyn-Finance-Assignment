@@ -104,13 +104,16 @@ Request → verifyJWT → checkActiveStatus → authorize(roles) → validate(sc
 
 ### Role-Permission Matrix
 
+All roles share a **system-wide view** of the dashboard — data is organisational, not personal.
+The distinction between roles is what level of detail they can access and whether they can modify data.
+
 | Action | Viewer | Analyst | Admin |
 |---|:---:|:---:|:---:|
-| View dashboard summary | ✅ | ✅ | ✅ |
-| View accounts list | ✅ | ✅ | ✅ |
-| View budget info | ✅ | ✅ | ✅ |
-| List / view transactions | ❌ | ✅ | ✅ |
-| View account details | ❌ | ✅ | ✅ |
+| View dashboard summary (totals, trends, charts) | ✅ | ✅ | ✅ |
+| View all accounts + balances (with owner names) | ✅ | ✅ | ✅ |
+| View own budget info | ✅ | ✅ | ✅ |
+| Drill into individual transaction records | ❌ | ✅ | ✅ |
+| View account details + transaction history | ❌ | ✅ | ✅ |
 | Create transactions | ❌ | ❌ | ✅ |
 | Update transactions | ❌ | ❌ | ✅ |
 | Delete transactions | ❌ | ❌ | ✅ |
@@ -503,20 +506,22 @@ You can verify role-based access control using the seeded demo accounts:
    - ✅ Has "Add Transaction" and "Admin Panel" in navigation
 
 2. **Login as Analyst** (`analyst@zorvyn.com` / `analyst123`)
-   - ✅ Can see dashboard summary and charts
-   - ✅ Can view transactions (read-only)
+   - ✅ Can see all accounts (with owner names) and full dashboard summary
+   - ✅ Can drill into individual transactions — all users' records (read-only)
+   - ✅ Can view any account's full transaction history
    - ❌ Cannot create / edit / delete transactions → `403 Forbidden`
-   - ❌ No "Admin Panel" in navigation
+   - ❌ No "Add Transaction" or "Admin Panel" in navigation
 
 3. **Login as Viewer** (`viewer@zorvyn.com` / `viewer123`)
-   - ✅ Can see dashboard summary and account balances
-   - ❌ Cannot view individual transactions → `403 Forbidden`
+   - ✅ Can see the full dashboard summary — system-wide totals, trends, charts
+   - ✅ Can see all accounts (listing with balances and owner names)
+   - ❌ Cannot drill into individual transaction records → `403 Forbidden`
    - ❌ Cannot create / edit / delete anything → `403 Forbidden`
    - ❌ No "Add Transaction" or "Admin Panel" in navigation
 
 4. **Guest Login** (click "🚀 Explore as Guest")
    - Logs in as the pre-seeded admin demo account
-   - Full dashboard access with sample financial data
+   - Full dashboard access with sample financial data from all seeded users
 
 ### Testing Access Control via API
 
@@ -540,7 +545,7 @@ curl -b cookies.txt -X POST https://zorvyn-finance-assignment.onrender.com/api/v
 
 1. **Single-user budget model**: Each user has at most one budget (enforced by unique index on `userId`). A multi-budget system (per account or per category) would be more flexible but adds complexity beyond the assignment scope.
 
-2. **Viewer access restricted from records**: Viewers can see the dashboard summary (aggregate data) but cannot list individual transactions. This is a deliberate security decision — summary data reveals totals but not individual financial entries.
+2. **Viewer access model**: The dashboard is a system-wide organisational view — all roles see aggregate data (totals, trends, all account balances with owner names). Viewers deliberately cannot drill into individual transaction records; that level of detail is reserved for analysts and admins. This mirrors real-world finance platforms where stakeholders see summaries but not raw ledger entries.
 
 3. **Guest login uses pre-seeded data**: The guest demo account (`guest@zorvyn.demo`) uses pre-seeded sample data for demonstration purposes. In a production system, this would be isolated or strictly read-only.
 
