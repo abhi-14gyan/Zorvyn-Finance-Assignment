@@ -2,10 +2,10 @@
 
 > A role-based finance data processing and access control system built with the MERN stack.
 
-**🌐 Live Frontend:** [https://zorvyn-finance-assignment.vercel.app](https://zorvyn-finance-assignment.vercel.app)  
-**🖥️ Live Backend API:** [https://zorvyn-finance-assignment.onrender.com](https://zorvyn-finance-assignment.onrender.com)  
+**🌐 Live Frontend:** [https://finance-website.vercel.app](https://zorvyn-finance-assignment.vercel.app)  
+**🖥️ Live Backend API:** [https://finance-website.onrender.com](https://zorvyn-finance-assignment.onrender.com)  
 **📖 API Documentation:** [API_DOCS.md](./API_DOCS.md)  
-**📂 GitHub Repository:** [https://github.com/abhi-14gyan/Zorvyn-Finance-Assignment](https://github.com/abhi-14gyan/Zorvyn-Finance-Assignment)
+**📂 GitHub Repository:** [https://github.com/abhi-14gyan/Zorvyn-Finance-Assignment](https://github.com/abhi-14gyan/Finance-Website)
 
 > **Quick Access:** Click "🚀 Explore as Guest" on the login page to instantly access the dashboard with pre-loaded sample data — no registration required.
 
