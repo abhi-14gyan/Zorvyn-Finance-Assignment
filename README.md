@@ -1,4 +1,4 @@
-# 🏦 Zorvyn Finance — Finance Data Processing and Access Control Backend
+# 🏦 Finance Data Processing and Access Control Backend
 
 > A role-based finance data processing and access control system built with the MERN stack.
 
